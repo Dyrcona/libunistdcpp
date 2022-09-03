@@ -42,28 +42,28 @@ public:
   int dup_read_handle(int newfd);
   int dup_write_handle(int newfd);
 
-  template<typename CharT>
-  ssize_t read(CharT *buffer, size_t count) const {
-    ssize_t rv = ::read(handles.at(0), buffer, sizeof(CharT) * count);
+  template<typename T>
+  ssize_t read(T *buffer, size_t count) const {
+    ssize_t rv = ::read(handles.at(0), buffer, sizeof(T) * count);
     if (rv == -1) sys_err(errno, __func__);
     return rv;
   }
 
-  template<typename CharT>
-  ssize_t write(const CharT *buffer, size_t count) const {
-    ssize_t rv = ::write(handles.at(1), buffer, sizeof(CharT) * count);
+  template<typename T>
+  ssize_t write(const T *buffer, size_t count) const {
+    ssize_t rv = ::write(handles.at(1), buffer, sizeof(T) * count);
     if (rv == -1) sys_err(errno, __func__);
     return rv;
   }
 
-  template<typename CharT, std::size_t N>
-  ssize_t read(std::array<CharT, N> &array) const {
-    return read<CharT>(array.data(), N);
+  template<typename T, std::size_t N>
+  ssize_t read(std::array<T, N> &array) const {
+    return read<T>(array.data(), N);
   }
 
-  template<typename CharT, std::size_t N>
-  ssize_t write(const std::array<CharT, N> &array) const {
-    return write<CharT>(array.data(), N);
+  template<typename T, std::size_t N>
+  ssize_t write(const std::array<T, N> &array) const {
+    return write<T>(array.data(), N);
   }
 
   ssize_t read(std::string &str) const;
@@ -89,21 +89,21 @@ public:
   Popen& operator=(const Popen&) = delete;
   Popen& operator=(Popen&&) = default;
 
-  template<typename CharT>
-  ssize_t read(CharT *buffer, size_t count) {
-    return std::fread(buffer, sizeof(CharT), count, pf);
+  template<typename T>
+  ssize_t read(T *buffer, size_t count) {
+    return std::fread(buffer, sizeof(T), count, pf);
   }
-  template<typename CharT>
-  ssize_t write(const CharT *buffer, size_t count) {
-    return std::fwrite(buffer, sizeof(CharT), count, pf);
+  template<typename T>
+  ssize_t write(const T *buffer, size_t count) {
+    return std::fwrite(buffer, sizeof(T), count, pf);
   }
-  template<typename CharT, std::size_t N>
-  ssize_t read(std::array<CharT, N> &array) {
-    return read<CharT>(array.data(), N);
+  template<typename T, std::size_t N>
+  ssize_t read(std::array<T, N> &array) {
+    return read<T>(array.data(), N);
   }
-  template<typename CharT, std::size_t N>
-  ssize_t write(const std::array<CharT, N> &array) {
-    return write<CharT>(array.data(), N);
+  template<typename T, std::size_t N>
+  ssize_t write(const std::array<T, N> &array) {
+    return write<T>(array.data(), N);
   }
   ssize_t read(std::string &str);
   ssize_t write(const std::string &str);
