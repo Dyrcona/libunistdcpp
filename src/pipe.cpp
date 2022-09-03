@@ -15,12 +15,12 @@ Pipe::Pipe(Flags flags) : handle_open{true,true} {
 #else
   int success = ::pipe(handles.data());
   if (success == 0) {
-    success = set_flags(flags);
-    if (success == -1) {
-      int err = errno;
+    try {
+      set_flags(flags);
+    } catch (std::system_error &e) {
       ::close(handles.at(0));
       ::close(handles.at(1));
-      sys_err(err, __func__);
+      throw;
     }
   } else {
     sys_err(errno, __func__);
