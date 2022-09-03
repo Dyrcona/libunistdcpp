@@ -1,6 +1,6 @@
 // -*- Mode: C++; -*-
 #ifndef UNISTD_ASPRINTF_H
-#define UNISTD_APRINTF_H
+#define UNISTD_ASPRINTF_H
 #include <unistd/err.h>
 #include <string>
 #include <memory>
