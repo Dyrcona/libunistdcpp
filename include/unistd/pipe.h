@@ -43,14 +43,14 @@ public:
   int dup_write_handle(int newfd);
 
   template<typename T>
-  ssize_t read(T *buffer, size_t count) const {
+  ssize_t read(T *buffer, std::size_t count) const {
     ssize_t rv = ::read(handles.at(0), buffer, sizeof(T) * count);
     if (rv == -1) sys_err(errno, __func__);
     return rv;
   }
 
   template<typename T>
-  ssize_t write(const T *buffer, size_t count) const {
+  ssize_t write(const T *buffer, std::size_t count) const {
     ssize_t rv = ::write(handles.at(1), buffer, sizeof(T) * count);
     if (rv == -1) sys_err(errno, __func__);
     return rv;
@@ -90,11 +90,11 @@ public:
   Popen& operator=(Popen&&) = default;
 
   template<typename T>
-  ssize_t read(T *buffer, size_t count) {
+  ssize_t read(T *buffer, std::size_t count) {
     return std::fread(buffer, sizeof(T), count, pf);
   }
   template<typename T>
-  ssize_t write(const T *buffer, size_t count) {
+  ssize_t write(const T *buffer, std::size_t count) {
     return std::fwrite(buffer, sizeof(T), count, pf);
   }
   template<typename T, std::size_t N>
