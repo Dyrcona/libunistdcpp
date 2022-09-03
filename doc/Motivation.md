@@ -7,12 +7,14 @@ and include much of the same, or more, functionality?
 
 The primary goal of libunistdcpp is to provide simple abstractions and
 better interaction with the C++ standard library when programming on
-POSIX and UNIX-like systems.  The primary operating system targets are
-GNU/Linux, FreeBSD, and OpenBSD on the x86_64 and ARM64 architectures.
-(Patches for compatibility with other POSIX operating systems and
-other architectures are always welcome.)  Libunistdcpp does not aim to
-compete with larger frameworks, provide general purpose programming
-abstractions, nor to offer wide portability among operating systems.
+POSIX compatible operating systems.  The primary operating system
+targets are GNU/Linux, FreeBSD, and OpenBSD on the x86_64 and ARM64
+architectures.  (Patches for compatibility with other, similar
+operating systems and other architectures are always welcome.)
+
+Libunistdcpp does not aim to compete with larger frameworks, provide
+general purpose programming abstractions, nor to offer wide
+portability among operating systems.
 
 In addition to implementing a software library that is potentially
 useful, the author hopes to learn and to have fun along the way.
