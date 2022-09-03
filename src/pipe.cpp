@@ -9,8 +9,23 @@
 namespace unistd {
 
 Pipe::Pipe(Flags flags) : handle_open{true,true} {
+#ifdef HAVE_PIPE2
   if (::pipe2(handles.data(), flags) == -1)
     sys_err(errno, __func__);
+#else
+  int success = ::pipe(handles.data());
+  if (success == 0) {
+    success = set_flags(flags);
+    if (success == -1) {
+      int err = errno;
+      ::close(handles.at(0));
+      ::close(handles.at(1));
+      sys_err(err, __func__);
+    }
+  } else {
+    sys_err(errno, __func__);
+  }
+#endif
 }
 
 Pipe::~Pipe() {

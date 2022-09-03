@@ -4,6 +4,7 @@
 # See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt
 
 cmake_minimum_required(VERSION 3.15)
+include(CheckCXXSymbolExists)
 
 project(unistdcpp VERSION 1.0.0 DESCRIPTION "C++ Support Library for POSIX")
 
@@ -26,6 +27,11 @@ target_include_directories(${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include/unistd>
   )
+
+check_cxx_symbol_exists(pipe2 "fcntl.h;unistd.h" HAVE_PIPE2)
+if(HAVE_PIPE2)
+  target_compile_definitions(${PROJECT_NAME} PRIVATE HAVE_PIPE2)
+endif()
 
 include(GNUInstallDirs)
 
