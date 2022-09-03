@@ -15,3 +15,5 @@ Addison-Wesley.  2013.
 
 Stroustrup, Bjarne.  *The C++ programming language, 4th ed*.  Upper Saddle
 River, NJ: Addison-Wesley.  2013.
+
+Stroustrup, Bjarne and Herb Sutter, editors. [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines).
