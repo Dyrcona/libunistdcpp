@@ -13,8 +13,7 @@ Pipe::Pipe(Flags flags) : handle_open{true,true} {
   if (::pipe2(handles.data(), flags) == -1)
     sys_err(errno, __func__);
 #else
-  int success = ::pipe(handles.data());
-  if (success == 0) {
+  if (::pipe(handles.data()) == 0) {
     try {
       set_flags(flags);
     } catch (std::system_error &e) {
