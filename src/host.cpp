@@ -12,7 +12,7 @@
 namespace unistd {
 
 std::string gethostname() {
-  std::array<char, HOST_NAME_MAX> buf{};
+  std::array<char, _POSIX_HOST_NAME_MAX> buf{};
   if (::gethostname(buf.data(), buf.max_size()) == 0)
     return {buf.data()};
   else
