@@ -2,8 +2,9 @@
 
 A C++ library for POSIX compatible operating systems.
 
-It is currently undergoing heavy development in preparation for its
-initial release.
+It is currently undergoing development in preparation for its initial
+release.  The API should be considered experimental and subject to
+change until this notice is removed.
 
 [Motivation](doc/Motivation.md)
 
