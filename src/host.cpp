@@ -6,12 +6,13 @@
 #include <unistd/err.h>
 #include <array>
 #include <cerrno>
+#include <climits>
 #include <unistd.h>
 
 namespace unistd {
 
 std::string gethostname() {
-  std::array<char, 256> buf{};
+  std::array<char, HOST_NAME_MAX> buf{};
   if (::gethostname(buf.data(), buf.max_size()) == 0)
     return {buf.data()};
   else
