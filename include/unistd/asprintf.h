@@ -31,19 +31,22 @@ auto asprintf_convert(T&& t) {
 }
 
 template<typename ... Args>
-std::string asprintf_impl(const std::string& format, Args&& ... args) {
+auto asprintf_impl(std::string &out, const std::string& format, Args&& ... args) {
   auto length = std::snprintf(nullptr, 0, format.c_str(), std::forward<Args>(args)...);
-  if (length < 0) { generic_err(errno, "asprintf"); }
+  if (length < 0) return length;
   std::size_t size = length + 1;
   auto buf = std::make_unique<char[]>(size);
   length = std::snprintf(buf.get(), size, format.c_str(), std::forward<Args>(args)...);
-  if (length < 0) { generic_err(errno, "asprintf"); }
-  return std::string(buf.get(), length);
+  if (length > 0) out.assign(buf.get(), length);
+  return length;
 }
 
 template<typename ... Args>
 std::string asprintf(const std::string& format, Args&& ... args) {
-  return asprintf_impl(format, asprintf_convert(std::forward<Args>(args))...);
+  std::string out{};
+  if (asprintf_impl(out, format, asprintf_convert(std::forward<Args>(args))...) == -1)
+    generic_err(errno, __func__);
+  return out;
 }
 
 }
