@@ -20,7 +20,7 @@ is no conflict with override resolution.
 
 Plain enumerations are used when the values are passed directly into C
 functions of the POSIX library.  Plain enumerations readily decay to
-int and many POSIX functions take int bitmasks as parameters.  Plain
-enumerations should always be specified as a member type of an outher
-class so that they are not globally accessible without specifying the
-outer class name, example: `Pipe::Flags`.
+int and many POSIX functions take integer bitmasks as parameters.
+Plain enumerations should always be specified as a member type of an
+outer class so that they are not globally accessible without
+specifying the outer class name, example: `Pipe::Flags`.
