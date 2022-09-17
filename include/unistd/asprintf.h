@@ -5,6 +5,7 @@
 #include <string>
 #include <memory>
 #include <cstdio>
+#include <cerrno>
 
 /**
  * asprintf functionality for C++ with std::string.
