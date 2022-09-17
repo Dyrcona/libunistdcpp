@@ -92,20 +92,32 @@ public:
 
   template<typename T>
   ssize_t read(T *buffer, std::size_t count) {
-    return std::fread(buffer, sizeof(T), count, pf);
+    errno = 0;
+    ssize_t rv = std::fread(buffer, sizeof(T), count, pf);
+    if (rv < count && std::ferror(pf))
+      throw_generic_error((errno) ? errno : EIO, __func__);
+    return rv;
   }
+
   template<typename T>
   ssize_t write(const T *buffer, std::size_t count) {
-    return std::fwrite(buffer, sizeof(T), count, pf);
+    errno = 0;
+    ssize_t rv = std::fwrite(buffer, sizeof(T), count, pf);
+    if (rv < count && std::ferror(pf))
+      throw_generic_error((errno) ? errno : EIO, __func__);
+    return rv;
   }
+
   template<typename T, std::size_t N>
   ssize_t read(std::array<T, N> &array) {
     return read<T>(array.data(), N);
   }
+
   template<typename T, std::size_t N>
   ssize_t write(const std::array<T, N> &array) {
     return write<T>(array.data(), N);
   }
+
   ssize_t read(std::string &str);
   ssize_t write(const std::string &str);
 
