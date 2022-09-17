@@ -9,6 +9,7 @@
 #include <string>
 #include <climits>
 #include <cstdio>
+#include <cerrno>
 #include <unistd.h>
 #include <fcntl.h>
 #include <unistd/err.h>
@@ -45,14 +46,14 @@ public:
   template<typename T>
   ssize_t read(T *buffer, std::size_t count) const {
     ssize_t rv = ::read(handles.at(0), buffer, sizeof(T) * count);
-    if (rv == -1) sys_err(errno, __func__);
+    if (rv == -1) throw_system_error(errno, __func__);
     return rv;
   }
 
   template<typename T>
   ssize_t write(const T *buffer, std::size_t count) const {
     ssize_t rv = ::write(handles.at(1), buffer, sizeof(T) * count);
-    if (rv == -1) sys_err(errno, __func__);
+    if (rv == -1) throw_system_error(errno, __func__);
     return rv;
   }
 

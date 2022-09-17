@@ -9,7 +9,7 @@ namespace unistd {
 
 SysName::SysName() {
   if (uname(&info) != 0)
-    sys_err(errno, __func__);
+    throw_system_error(errno, __func__);
 }
 
 std::string SysName::sysname() const {

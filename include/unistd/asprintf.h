@@ -45,7 +45,7 @@ template<typename ... Args>
 std::string asprintf(const std::string& format, Args&& ... args) {
   std::string out{};
   if (asprintf_impl(out, format, asprintf_convert(std::forward<Args>(args))...) == -1)
-    generic_err(errno, __func__);
+    throw_generic_error(errno, __func__);
   return out;
 }
 

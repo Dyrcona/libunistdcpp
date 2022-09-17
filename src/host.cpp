@@ -16,12 +16,12 @@ std::string gethostname() {
   if (::gethostname(buf.data(), buf.max_size()) == 0)
     return {buf.data()};
   else
-    sys_err(errno, __func__);
+    throw_system_error(errno, __func__);
 }
 
 void sethostname(const std::string &name) {
   if (::sethostname(name.c_str(), name.length()) == -1)
-    sys_err(errno, __func__);
+    throw_system_error(errno, __func__);
 }
 
 }

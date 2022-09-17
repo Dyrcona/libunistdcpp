@@ -11,7 +11,7 @@ namespace unistd {
 Pipe::Pipe(Flags flags) : handle_open{true,true} {
 #ifdef HAVE_PIPE2
   if (::pipe2(handles.data(), flags) == -1)
-    sys_err(errno, __func__);
+    throw_system_error(errno, __func__);
 #else
   if (::pipe(handles.data()) == 0) {
     try {
@@ -22,7 +22,7 @@ Pipe::Pipe(Flags flags) : handle_open{true,true} {
       throw;
     }
   } else {
-    sys_err(errno, __func__);
+    throw_system_error(errno, __func__);
   }
 #endif
 }
@@ -73,22 +73,22 @@ int Pipe::get_write_handle() const { return handles.at(1); }
 
 void Pipe::close_read_handle() {
   if (close(0) == -1)
-    sys_err(errno, __func__);
+    throw_system_error(errno, __func__);
 }
 
 void Pipe::close_write_handle() {
   if (close(1) == -1)
-    sys_err(errno, __func__);
+    throw_system_error(errno, __func__);
 }
 
 void Pipe::set_read_handle_flags(Flags flags) const {
   if(fcntl(0, flags) == -1)
-    sys_err(errno, __func__);
+    throw_system_error(errno, __func__);
 }
 
 void Pipe::set_write_handle_flags(Flags flags) const {
   if(fcntl(1, flags) == -1)
-    sys_err(errno, __func__);
+    throw_system_error(errno, __func__);
 }
 
 void Pipe::set_flags(Flags flags) const {
@@ -99,28 +99,28 @@ void Pipe::set_flags(Flags flags) const {
 int Pipe::dup_read_handle() const {
   int nfd = dup(0);
   if (nfd == -1)
-    sys_err(errno, __func__);
+    throw_system_error(errno, __func__);
   return nfd;
 }
 
 int Pipe::dup_write_handle() const {
   int nfd = dup(1);
   if (nfd == -1)
-    sys_err(errno, __func__);
+    throw_system_error(errno, __func__);
   return nfd;
 }
 
 int Pipe::dup_read_handle(int newfd) {
   int nfd = dup(0, newfd);
   if (nfd == -1)
-    sys_err(errno, __func__);
+    throw_system_error(errno, __func__);
   return nfd;
 }
 
 int Pipe::dup_write_handle(int newfd) {
   int nfd = dup(1, newfd);
   if (nfd == -1)
-    sys_err(errno, __func__);
+    throw_system_error(errno, __func__);
   return nfd;
 }
 
@@ -139,7 +139,7 @@ ssize_t Pipe::write(const std::string &str) const {
 Popen::Popen(const std::string &command, const std::string &type) {
   pf = ::popen(command.c_str(), type.c_str());
   if (!pf)
-    sys_err(errno, __func__);
+    throw_system_error(errno, __func__);
 }
 
 Popen::~Popen() {

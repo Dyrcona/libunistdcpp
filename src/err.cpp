@@ -8,12 +8,12 @@
 namespace unistd {
 
 [[noreturn]]
-void sys_err(int error, const std::string &context) {
+void throw_system_error(int error, const std::string &context) {
   throw std::system_error{error, std::system_category(), context};
 }
 
 [[noreturn]]
-void generic_err(int error, const std::string &context) {
+void throw_generic_error(int error, const std::string &context) {
   throw std::system_error{error, std::generic_category(), context};
 }
 
