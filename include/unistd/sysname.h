@@ -6,6 +6,7 @@
 #ifndef UNISTD_SYSNAME_H
 #define UNISTD_SYSNAME_H
 #include <sys/utsname.h>
+#include <memory>
 #include <string>
 #include <ostream>
 
@@ -15,10 +16,10 @@ class SysName {
 public:
   SysName();
   SysName(const SysName &) = delete;
-  SysName(SysName &&) = default;
+  SysName(SysName &&) = delete;
   ~SysName() = default;
   SysName& operator=(const SysName &) = delete;
-  SysName& operator=(SysName &&) = default;
+  SysName& operator=(SysName &&) = delete;
   std::string sysname() const;
   std::string nodename() const;
   std::string release() const;
@@ -26,7 +27,7 @@ public:
   std::string machine() const;
 
 private:
-  struct utsname info;
+  std::unique_ptr<struct utsname> info;
 };
 
 std::ostream& operator<<(std::ostream &os, const SysName &info);

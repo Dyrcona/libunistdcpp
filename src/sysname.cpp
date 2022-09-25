@@ -8,33 +8,34 @@
 namespace unistd {
 
 SysName::SysName() {
-  if (uname(&info) != 0)
+  info = std::make_unique<struct utsname>();
+  if (uname(info.get()) != 0)
     throw_system_error(errno, __func__);
 }
 
 std::string SysName::sysname() const {
-  return {info.sysname};
+  return {info->sysname};
 }
 
 std::string SysName::nodename() const {
-  return {info.nodename};
+  return {info->nodename};
 }
 
 std::string SysName::release() const {
-  return {info.release};
+  return {info->release};
 }
 
 std::string SysName::version() const {
-  return {info.version};
+  return {info->version};
 }
 
 std::string SysName::machine() const {
-  return {info.machine};
+  return {info->machine};
 }
 
-std::ostream& operator<<(std::ostream& os, const SysName& info) {
-  return os << info.sysname() << " " << info.nodename() << " " << info.release()
-            << " " << info.version() << " " << info.machine();
+std::ostream& operator<<(std::ostream& os, const SysName& sysname) {
+  return os << sysname.sysname() << " " << sysname.nodename() << " " << sysname.release()
+            << " " << sysname.version() << " " << sysname.machine();
 }
 
 }
