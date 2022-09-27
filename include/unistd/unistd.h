@@ -10,7 +10,6 @@
 #include <unistd/err.h>
 #include <unistd/host.h>
 #include <unistd/pipe.h>
-#include <unistd/popen.h>
 #include <unistd/sysname.h>
 #include <unistd/asprintf.h>
 
