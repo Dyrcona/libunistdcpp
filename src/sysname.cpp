@@ -9,7 +9,7 @@ namespace unistd {
 
 SysName::SysName() {
   info = std::make_unique<struct utsname>();
-  if (uname(info.get()) != 0)
+  if (::uname(info.get()) != 0)
     throw_system_error(errno, __func__);
 }
 
