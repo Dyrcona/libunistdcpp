@@ -53,7 +53,7 @@ std::string asprintf(const std::string& format, Args&& ... args) {
 
 template<typename ... Args>
 std::string asprintf(std::string_view& format, Args&& ... args) {
-  return asprintf(std::string(format), std::forward<Args>(args)...);
+  return asprintf(static_cast<std::string>(format), std::forward<Args>(args)...);
 }
 
 }
