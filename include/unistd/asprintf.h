@@ -3,6 +3,7 @@
 #define UNISTD_ASPRINTF_H
 #include <unistd/err.h>
 #include <string>
+#include <string_view>
 #include <memory>
 #include <cstdio>
 #include <cerrno>
@@ -48,6 +49,11 @@ std::string asprintf(const std::string& format, Args&& ... args) {
   if (asprintf_impl(out, format, asprintf_convert(std::forward<Args>(args))...) == -1)
     throw_generic_error(errno, __func__);
   return out;
+}
+
+template<typename ... Args>
+std::string asprintf(std::string_view& format, Args&& ... args) {
+  return asprintf(std::string(format), std::forward<Args>(args)...);
 }
 
 }
