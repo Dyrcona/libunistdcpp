@@ -24,7 +24,11 @@ namespace unistd {
 
 template<typename T>
 auto asprintf_convert(T&& t) {
-  if constexpr (std::is_same_v<std::remove_cv_t<std::remove_reference_t<T>>, std::string>) {
+  if constexpr (std::is_same_v<std::remove_cv_t<std::remove_reference_t<T>>, std::string_view>) {
+    std::string s = std::move(static_cast<std::string>(t));
+    return std::forward<std::string>(s).c_str();
+  }
+  else if constexpr (std::is_same_v<std::remove_cv_t<std::remove_reference_t<T>>, std::string>) {
     return std::forward<T>(t).c_str();
   }
   else {
