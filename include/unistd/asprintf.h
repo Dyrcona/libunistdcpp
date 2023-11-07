@@ -33,7 +33,7 @@ auto asprintf_convert(T&& t) {
 }
 
 template<typename ... Args>
-auto asprintf_impl(std::string &out, const std::string& format, Args&& ... args) {
+auto asprintf_impl(std::string& out, const std::string& format, Args&& ... args) {
   auto length = std::snprintf(nullptr, 0, format.c_str(), std::forward<Args>(args)...);
   if (length < 0) return length;
   std::size_t size = length + 1;
