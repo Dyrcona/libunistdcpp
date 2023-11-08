@@ -39,7 +39,7 @@ auto asprintf_convert(T&& t) {
 template<typename ... Args>
 auto asprintf_impl(std::string& out, const std::string& format, Args&& ... args) {
   auto length = std::snprintf(nullptr, 0, format.c_str(), std::forward<Args>(args)...);
-  if (length < 0) return length;
+  if (length < 1) return length;
   std::size_t size = length + 1;
   auto buf = std::make_unique<char[]>(size);
   length = std::snprintf(buf.get(), size, format.c_str(), std::forward<Args>(args)...);
