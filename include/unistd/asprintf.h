@@ -6,6 +6,7 @@
 #include <string_view>
 #include <memory>
 #include <cstdio>
+#include <cstddef>
 #include <cerrno>
 
 /**
