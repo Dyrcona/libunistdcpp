@@ -12,5 +12,6 @@
 #include <unistd/pipe.h>
 #include <unistd/sysname.h>
 #include <unistd/asprintf.h>
+#include <unistd/finalizer.h>
 
 #endif
