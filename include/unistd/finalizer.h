@@ -10,13 +10,13 @@ namespace unistd {
 
 // This is a common implementation and should likely be considerd
 // public domain.
-template <class F> class scope_finalizer {
+template <class F> class ScopeFinalizer {
   F f;
 public:
-  scope_finalizer(const scope_finalizer&) = delete;
-  scope_finalizer& operator=(const scope_finalizer&) = delete;
-  scope_finalizer(F f) : f {f} {}
-  ~scope_finalizer() {
+  ScopeFinalizer(const ScopeFinalizer&) = delete;
+  ScopeFinalizer& operator=(const ScopeFinalizer&) = delete;
+  ScopeFinalizer(F f) : f {f} {}
+  ~ScopeFinalizer() {
     f();
   }
 };
