@@ -8,7 +8,7 @@
 
 namespace unistd {
 
-// This is a common implementation and should likely be considerd
+// This is a common implementation and should likely be considered
 // public domain.
 template <class F> class ScopeFinalizer {
   F f;
